@@ -577,7 +577,7 @@ namespace BearTale
 				//write each row to the database as all of them have changed
 			}
 		}
-
+		//
 		private void button1_Click(object sender, EventArgs e)
 		{
 			string a = "a";
