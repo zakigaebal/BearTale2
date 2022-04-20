@@ -35,6 +35,7 @@ namespace BearTale
     protected int boxWidth;
 
     private Color c;
+    private Color d;
 
 
 
@@ -141,7 +142,7 @@ namespace BearTale
         return;
 
       c = Color.FromName((string)base.Items[e.Index]);
-
+      Color cd = Color.FromArgb(c.A,c.R,c.G,c.B);
 
 
       //the color rectangle

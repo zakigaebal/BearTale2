@@ -270,7 +270,6 @@
 			this.colorCombo2.Size = new System.Drawing.Size(141, 19);
 			this.colorCombo2.TabIndex = 18;
 			this.colorCombo2.ColorChanged += new BearTale.ColorChangedHandler(this.colorCombo1_ColorChanged);
-			this.colorCombo2.Load += new System.EventHandler(this.colorCombo1_Load);
 			// 
 			// Form2
 			// 
