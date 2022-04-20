@@ -6,11 +6,13 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace BearTale
 {
@@ -21,6 +23,15 @@ namespace BearTale
 		{
 			InitializeComponent();
 		}
+
+
+
+
+
+
+
+
+
 
 		private BindingSource oBS = new BindingSource();
 		public static int Compare(String strA, String strB, bool ignoreCase)
@@ -49,7 +60,9 @@ namespace BearTale
 			강조.전환 = checkBoxInvert.Checked;
 			강조.진하게 = checkBoxBold.Checked;
 			강조.기울이게 = checkBoxItalic.Checked;
+
 			bindingSource.Add(강조);
+			jsonSave();
 		}
 		private void buttonDelete_Click(object sender, EventArgs e)
 		{
@@ -152,30 +165,57 @@ namespace BearTale
 			catch { }
 		}
 
+		public 강조클래스 강조들 { get; set; }
+
 		private void buttonSave_Click(object sender, EventArgs e)
 		{
-			string filename = "high.xml";
-			List<List<string>> data = new List<List<string>>();
-			foreach (DataGridViewRow row in dataGridView1.Rows)
-			{
-				List<string> rowData = new List<string>();
-				foreach (DataGridViewCell cell in row.Cells)
-					//		rowData.Add(cell)
-					rowData.Add(cell.FormattedValue.ToString());
-				data.Add(rowData);
-			}
-			XmlSerializer xs = new XmlSerializer(data.GetType());
-			using (TextWriter tw = new StreamWriter(filename))
-			{
-				xs.Serialize(tw, data);
-				tw.Close();
-			}
+			//강조들.칼라 = ((강조클래스))
 		}
 
 		private void buttonLoad_Click(object sender, EventArgs e)
 		{
-		
+			Color cd = Color.FromArgb(colorCombo1.SelectedColor.A, colorCombo1.SelectedColor.R, colorCombo1.SelectedColor.G, colorCombo1.SelectedColor.B);
+			Color cb = Color.FromArgb(colorCombo2.SelectedColor.A, colorCombo2.SelectedColor.R, colorCombo2.SelectedColor.G, colorCombo2.SelectedColor.B);
 
+			System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			//강조클래스 data = new 강조클래스
+			//{
+			//	칼라 = textBoxString.Text,
+			//	내용 = textBoxString.Text,
+			//	글자색 = cd.Name.ToString(),
+			//	배경색 = cb.Name.ToString(),
+			//	무시 = checkBoxIgnore.Checked,
+			//	전환 = checkBoxInvert.Checked,
+			//	진하게 = checkBoxBold.Checked,
+			//	기울이게 = checkBoxItalic.Checked
+			//};
+			string currentPath = System.IO.Directory.GetCurrentDirectory();
+			string jsonName = @"" + currentPath + "highlightJson" + ".json";
+			var serializedStr = File.ReadAllText(jsonName);
+			강조들 = JsonConvert.DeserializeObject<강조클래스>(serializedStr, new JsonSerializerSettings());
+			if (강조들 == null)
+			{
+				강조들 = new 강조클래스()
+				{
+					칼라 = textBoxString.Text,
+					내용 = textBoxString.Text,
+					글자색 = cd.Name.ToString(),
+					배경색 = cb.Name.ToString(),
+					무시 = checkBoxIgnore.Checked,
+					전환 = checkBoxInvert.Checked,
+					진하게 = checkBoxBold.Checked,
+					기울이게 = checkBoxItalic.Checked
+				};
+			}
+			
+
+
+			//string jsonText = File.ReadAllText(jsonName);
+
+			//var data = JsonConvert.DeserializeObject<강조클래스>(jsonText);
+			//강조내용.Add(data);
+			bindingSource.DataSource = 강조들;
+			dataGridView1.DataSource = bindingSource;
 		}
 
 
@@ -233,7 +273,7 @@ namespace BearTale
 
 		public class 강조클래스
 		{
-			public string 칼라 { get; set; }	//get , set을 써주어야만 리스트 상태로 DataGridView에 바인딩 할 수가 있다.
+			public string 칼라 { get; set; }  //get , set을 써주어야만 리스트 상태로 DataGridView에 바인딩 할 수가 있다.
 			public string 내용 { get; set; }
 			public string 글자색 { get; set; }
 			public string 배경색 { get; set; }
@@ -244,11 +284,13 @@ namespace BearTale
 		}
 		BindingSource bindingSource = new BindingSource();
 		List<강조클래스> 강조내용 = new List<강조클래스>();
+
+
 		private void Form2_Load(object sender, EventArgs e)
 		{
 			bindingSource.DataSource = 강조내용;
 			dataGridView1.DataSource = bindingSource;
-			dataGridView1.Rows.Clear();
+
 			dataGridView1.AllowUserToAddRows = false;
 			dataGridView1.Columns[0].Width = 50;
 			dataGridView1.Columns[1].Width = 100;
@@ -257,15 +299,55 @@ namespace BearTale
 			dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
 			dataGridView1.ReadOnly = true;
 			dataGridView1.ColumnHeadersVisible = true;
+			colorCombo1.SelectedColor = Color.White;
 			//buttonLoad_Click(sender, e);
 		}
-		private void 삭제_Click(object sender, EventArgs e)
+
+		private void jsonSave()
 		{
-			if (강조내용.Count > 0)
+			try
 			{
-				bindingSource.RemoveAt(dataGridView1.CurrentRow.Index);
+				Color cd = Color.FromArgb(colorCombo1.SelectedColor.A, colorCombo1.SelectedColor.R, colorCombo1.SelectedColor.G, colorCombo1.SelectedColor.B);
+				Color cb = Color.FromArgb(colorCombo2.SelectedColor.A, colorCombo2.SelectedColor.R, colorCombo2.SelectedColor.G, colorCombo2.SelectedColor.B);
+
+				System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+				string currentPath = System.IO.Directory.GetCurrentDirectory();
+				
+
+				//직렬화
+
+				var data = new 강조클래스
+				{
+					칼라 = textBoxString.Text,
+					내용 = textBoxString.Text,
+					글자색 = cd.Name.ToString(),
+					배경색 = cb.Name.ToString(),
+					무시 = checkBoxIgnore.Checked,
+					전환 = checkBoxInvert.Checked,
+					진하게 = checkBoxBold.Checked,
+					기울이게 = checkBoxItalic.Checked
+				};
+
+				var jsonText = JsonConvert.SerializeObject(data);
+				Console.WriteLine(jsonText);
+
+
+
+				string json1 = JsonConvert.SerializeObject(data, Formatting.Indented);
+				string jsonName = @"" + currentPath + "highlightJson" + ".json";
+
+				using (FileStream fs = new FileStream(jsonName, FileMode.Append, FileAccess.Write))
+				using (StreamWriter Write = new StreamWriter(fs))
+				{
+					Write.WriteLine(json1);
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message);
 			}
 		}
+
 
 		private void colorComboBox1_SelectionChangeCommitted(object sender, EventArgs e)
 		{
@@ -275,7 +357,7 @@ namespace BearTale
 			}
 			int rowIndex = dataGridView1.CurrentCell.RowIndex;
 			dataGridView1.Rows[rowIndex].Cells[2].Value = colorCombo1.Name.ToString();
-//			dataGridView1.Rows[rowIndex].Cells[0].Style.ForeColor = Color.FromName(colorComboBox1.Text);
+			//			dataGridView1.Rows[rowIndex].Cells[0].Style.ForeColor = Color.FromName(colorComboBox1.Text);
 			//textboxColumn.DefaultCellStyle.ForeColor = Color.FromName(colorComboBox1.Text);
 		}
 
@@ -288,8 +370,8 @@ namespace BearTale
 			int rowIndex = dataGridView1.CurrentCell.RowIndex;
 			dataGridView1.Rows[rowIndex].Cells[3].Value = colorCombo2.Name.ToString();
 
-	//		dataGridView1.Rows[rowIndex].Cells[0].Style.BackColor = Color.FromName(colorComboBox2.Text);
-	//textboxColumn.DefaultCellStyle.BackColor = Color.FromName(colorComboBox2.Text);
+			//		dataGridView1.Rows[rowIndex].Cells[0].Style.BackColor = Color.FromName(colorComboBox2.Text);
+			//textboxColumn.DefaultCellStyle.BackColor = Color.FromName(colorComboBox2.Text);
 		}
 
 
@@ -498,7 +580,7 @@ namespace BearTale
 		{
 		}
 
-		
+
 
 		private void checkBoxInvert_CheckedChanged(object sender, EventArgs e)
 		{
@@ -542,12 +624,12 @@ namespace BearTale
 				dataGridView1.Rows[i].Cells[0].Style.BackColor = clr2;
 
 				// 체크박스가 볼드가 True이고 체크박스 이태릭이 False일때
-					if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "True" && dataGridView1.Rows[i].Cells[7].Value.ToString() == "False")
+				if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "True" && dataGridView1.Rows[i].Cells[7].Value.ToString() == "False")
 				{
 					dataGridView1.Rows[i].Cells[0].Style.Font = new Font(DataGridView.DefaultFont, FontStyle.Bold);
 				}
 				//체크박스가 이태릭이 트루이고 볼드는 false일때
-			  else if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "True" && dataGridView1.Rows[i].Cells[6].Value.ToString() == "False")
+				else if (dataGridView1.Rows[i].Cells[7].Value.ToString() == "True" && dataGridView1.Rows[i].Cells[6].Value.ToString() == "False")
 				{
 					dataGridView1.Rows[i].Cells[0].Style.Font = new Font(DataGridView.DefaultFont, FontStyle.Italic);
 				}
@@ -568,19 +650,29 @@ namespace BearTale
 
 		private void colorCombo1_ColorChanged(object sender, ColorChangeArgs e)
 		{
-			//MessageBox.Show(this,e.color.Name.ToString(),"Selected color",MessageBoxButtons.OK,MessageBoxIcon.Information);
+			Console.WriteLine(e.color.Name.ToString(), "Selected color", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 			if (dataGridView1.CurrentCell == null)
 			{
 				return;
 			}
 			int rowIndex = dataGridView1.CurrentCell.RowIndex;
-			dataGridView1.Rows[rowIndex].Cells[2].Value = colorCombo1.Name.ToString();
+			//			dataGridView1.Rows[rowIndex].Cells[2].Value = e.color.Name.ToString();
+
+			Color cd = Color.FromArgb(colorCombo1.SelectedColor.A, colorCombo1.SelectedColor.R, colorCombo1.SelectedColor.G, colorCombo1.SelectedColor.B);
+			Color cb = Color.FromArgb(colorCombo2.SelectedColor.A, colorCombo2.SelectedColor.R, colorCombo2.SelectedColor.G, colorCombo2.SelectedColor.B);
+
+			dataGridView1.Rows[rowIndex].Cells[2].Value = cd.Name.ToString();
+			dataGridView1.Rows[rowIndex].Cells[3].Value = cb.Name.ToString();
+			//강조.글자색 = colorCombo1.SelectedColor.Name.ToString();
+			//강조.배경색 = colorCombo2.SelectedColor.Name.ToString();
+
+
 		}
 
 		private void colorCombo1_Load(object sender, EventArgs e)
 		{
-			
+
 		}
 	}
 }

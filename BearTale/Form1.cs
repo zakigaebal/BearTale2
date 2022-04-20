@@ -28,13 +28,31 @@ namespace BearTale
 			InitializeComponent();
 		}
 
+				string filePath = string.Empty;
+				string fileName = string.Empty;
+				string fileContent = string.Empty;
+				string fileFolder = string.Empty;
+
+
+
+
+
 		private void addTab()
 		{
 			try
 			{
-				string filePath = string.Empty;
-				string fileName = string.Empty;
-				string fileContent = string.Empty;
+
+				//폴더 및 모든 파일 감시....
+				//FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+				
+					//label3.Text = fbd.SelectedPath;
+					//모든 파일 감시 ...
+					//Ex) *.txt 모든 텍스트 파일 감시...
+				
+				
+
+
 
 				using (OpenFileDialog fd = new OpenFileDialog())
 				{
@@ -43,6 +61,7 @@ namespace BearTale
 					{
 						filePath = fd.FileName; //전체 경로와 파일명 
 						fileName = fd.SafeFileName; //선택한 파일명은 fd.SafeFileName
+						fileFolder = fd.InitialDirectory; //경로
 
 						//경로텍스트박스 초기화
 						toolStripTextBoxPath.Clear();
@@ -79,6 +98,11 @@ namespace BearTale
 						page.Controls.Add(dgv);
 						//탭컨트롤에 탭페이지 추가
 						tabControl1.TabPages.Add(page);
+
+						fileSystemWatcher1.Path = @"C:\dw\2022-04-20";
+						//fileSystemWatcher1.Path = $"{fileFolder}";
+						//fileSystemWatcher1.Filter = "*.*";
+						//fileSystemWatcher1.NotifyFilter = NotifyFilters.DirectoryName | NotifyFilters.Size | NotifyFilters.FileName;
 
 					}
 					else
@@ -203,8 +227,9 @@ namespace BearTale
 				Form2 newform2 = new Form2();
 				newform2.ShowDialog(this);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
+				Console.WriteLine(ex);
 			}
 		}
 
@@ -225,6 +250,9 @@ namespace BearTale
 			comboBoxUtf.SelectedIndex = 0;
 
 			dgv.CellFormatting += dgv_CellFormatting;
+
+
+
 		}
 
 		private void ListViewAdd(string fn, string fl, string fc) //리스트뷰에 들어온 데이터를 추가하자 
@@ -270,24 +298,23 @@ namespace BearTale
 		{
 			//Form2 highLightForm = (Form2)Owner;
 			//highLightForm form2 = (Form2)highLightForm;
-			string fileName = "high.xml";
-			List<List<string>> data = new List<List<string>>();
-			XmlSerializer xs = new XmlSerializer(data.GetType());
-			using (TextReader tr = new StreamReader(fileName))
-				data = (List<List<string>>)xs.Deserialize(tr);
+			//string fileName = "high.xml";
+			//List<List<string>> data = new List<List<string>>();
+			//XmlSerializer xs = new XmlSerializer(data.GetType());
+			//using (TextReader tr = new StreamReader(fileName))
+			//	data = (List<List<string>>)xs.Deserialize(tr);
 
 
-			foreach (List<string> rowData in data)
-			{
-				if (rowData.ToArray() == rowData.ToArray())
-				{
-					dgv.Rows[0].Cells[0].Style.ForeColor = Color.Red;
-				}
-				// dgv.Rows[0].Cells[0].Style.ForeColor =	rowData.First.ToString();
-				//dataGridView1.Rows[i].Cells[0].Style.ForeColor = Color.FromName(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value.ToString());
-				//				dgv.Rows.Add(rowData.ToArray());
-			}
-
+			//foreach (List<string> rowData in data)
+			//{
+			//	if (rowData.ToArray() == rowData.ToArray())
+			//	{
+			//		dgv.Rows[0].Cells[0].Style.ForeColor = Color.Red;
+			//	}
+			//	// dgv.Rows[0].Cells[0].Style.ForeColor =	rowData.First.ToString();
+			//	//dataGridView1.Rows[i].Cells[0].Style.ForeColor = Color.FromName(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value.ToString());
+			//	//				dgv.Rows.Add(rowData.ToArray());
+			//}
 		}
 
 		Thread threadFileView = null; //파일조회 스레드 개체 생성
@@ -391,7 +418,18 @@ namespace BearTale
 
 		private void checkBoxTail_CheckedChanged(object sender, EventArgs e)
 		{
-
+			//tail 기능
+			if (checkBoxTail.Checked)
+			{
+				//폴더 및 모든 파일 감시....
+					fileSystemWatcher1.Path = toolStripTextBoxPath.Text;
+					fileSystemWatcher1.Filter = "*.*";
+					fileSystemWatcher1.NotifyFilter = NotifyFilters.DirectoryName | NotifyFilters.Size | NotifyFilters.FileName;
+			}
+			else
+			{
+				//감시종료
+			}
 		}
 
 		private void tabControl1_DragDrop(object sender, DragEventArgs e)
@@ -411,6 +449,33 @@ namespace BearTale
 		private void viewToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
+		}
+		private void Run_Watcher()
+
+		{
+			// 파일을 감시할 경로 지정
+			// 감시할 파일 확장자도 설정가능
+			// fileSystemWatcher.Filter = "*.jpg";
+		}
+
+
+
+		private void button1_Click_1(object sender, EventArgs e)
+		{
+			//폴더 및 모든 파일 감시....
+			FolderBrowserDialog fbd = new FolderBrowserDialog();
+
+			if (fbd.ShowDialog() == DialogResult.OK)
+			{
+				fileSystemWatcher1.Path = fbd.SelectedPath;
+				fileSystemWatcher1.Filter = "*.*";
+				fileSystemWatcher1.NotifyFilter = NotifyFilters.DirectoryName | NotifyFilters.Size | NotifyFilters.FileName;
+			}
+		}
+
+		private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
+		{
+			Console.WriteLine("변경");
 		}
 	}
 }
