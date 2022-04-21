@@ -119,19 +119,19 @@
 			// 
 			this.buttonPageUp.Location = new System.Drawing.Point(235, 161);
 			this.buttonPageUp.Name = "buttonPageUp";
-			this.buttonPageUp.Size = new System.Drawing.Size(63, 23);
+			this.buttonPageUp.Size = new System.Drawing.Size(71, 23);
 			this.buttonPageUp.TabIndex = 4;
-			this.buttonPageUp.Text = "Page Up";
+			this.buttonPageUp.Text = "MoveTop";
 			this.buttonPageUp.UseVisualStyleBackColor = true;
 			this.buttonPageUp.Click += new System.EventHandler(this.buttonPageUp_Click);
 			// 
 			// buttonPageDown
 			// 
-			this.buttonPageDown.Location = new System.Drawing.Point(298, 161);
+			this.buttonPageDown.Location = new System.Drawing.Point(306, 161);
 			this.buttonPageDown.Name = "buttonPageDown";
-			this.buttonPageDown.Size = new System.Drawing.Size(78, 23);
+			this.buttonPageDown.Size = new System.Drawing.Size(94, 23);
 			this.buttonPageDown.TabIndex = 4;
-			this.buttonPageDown.Text = "Page Down";
+			this.buttonPageDown.Text = "MoveBottom";
 			this.buttonPageDown.UseVisualStyleBackColor = true;
 			this.buttonPageDown.Click += new System.EventHandler(this.buttonPageDown_Click);
 			// 
@@ -148,7 +148,7 @@
 			// 
 			this.textBoxString.Location = new System.Drawing.Point(13, 241);
 			this.textBoxString.Name = "textBoxString";
-			this.textBoxString.Size = new System.Drawing.Size(449, 21);
+			this.textBoxString.Size = new System.Drawing.Size(473, 21);
 			this.textBoxString.TabIndex = 6;
 			this.textBoxString.TextChanged += new System.EventHandler(this.textBoxString_TextChanged);
 			// 
@@ -166,7 +166,7 @@
 			// 
 			this.buttonCancel.Location = new System.Drawing.Point(399, 262);
 			this.buttonCancel.Name = "buttonCancel";
-			this.buttonCancel.Size = new System.Drawing.Size(64, 23);
+			this.buttonCancel.Size = new System.Drawing.Size(87, 23);
 			this.buttonCancel.TabIndex = 8;
 			this.buttonCancel.Text = "CANCEL";
 			this.buttonCancel.UseVisualStyleBackColor = true;
@@ -174,7 +174,7 @@
 			// 
 			// buttonLoad
 			// 
-			this.buttonLoad.Location = new System.Drawing.Point(375, 161);
+			this.buttonLoad.Location = new System.Drawing.Point(400, 161);
 			this.buttonLoad.Name = "buttonLoad";
 			this.buttonLoad.Size = new System.Drawing.Size(42, 23);
 			this.buttonLoad.TabIndex = 9;
@@ -184,7 +184,7 @@
 			// 
 			// buttonSave
 			// 
-			this.buttonSave.Location = new System.Drawing.Point(417, 161);
+			this.buttonSave.Location = new System.Drawing.Point(442, 161);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.Size = new System.Drawing.Size(45, 23);
 			this.buttonSave.TabIndex = 10;
@@ -198,7 +198,7 @@
 			this.dataGridView1.Location = new System.Drawing.Point(12, 5);
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.RowTemplate.Height = 23;
-			this.dataGridView1.Size = new System.Drawing.Size(449, 150);
+			this.dataGridView1.Size = new System.Drawing.Size(475, 150);
 			this.dataGridView1.TabIndex = 15;
 			this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
 			this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -295,7 +295,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(470, 287);
+			this.ClientSize = new System.Drawing.Size(498, 287);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.colorComboBox2);

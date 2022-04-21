@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -36,12 +37,14 @@ namespace BearTale
 			if (colorComboBox1.SelectedItem.ToString() == "Custom")
 			{
 				강조.글자색 = customColor.Name.ToString();
+			}
+			if (colorComboBox1.SelectedItem.ToString() == "Custom")
+			{
 				강조.배경색 = customColor2.Name.ToString();
 			}
 
-
 			bindingSource.Add(강조);
-			jsonSave();
+			//jsonSave();
 		}
 
 
@@ -151,8 +154,31 @@ namespace BearTale
 
 		private void buttonSave_Click(object sender, EventArgs e)
 		{
-			//강조들.칼라 = ((강조클래스))
+			//데이터테이블 가져오기
+			DataTable dt = GetDataGridViewAsDataTable(dataGridView1);
+			//json 가져오기
+			string json =	DataTableToJSONWithJSONNet(dt);
+
+			//path
+			string currentPath = System.IO.Directory.GetCurrentDirectory();
+			//json이름
+			string jsonName = @"" + currentPath + "\\highlightJson" + ".json";
+			using (FileStream fs = new FileStream(jsonName, FileMode.Create, FileAccess.Write))
+			using (StreamWriter Write = new StreamWriter(fs))
+			{
+				Write.WriteLine(json);
+			}
+
+
 		}
+
+		public string DataTableToJSONWithJSONNet(DataTable table)
+		{
+			string JSONString = string.Empty;
+			JSONString = JsonConvert.SerializeObject(table);
+			return JSONString;
+		}
+
 
 		private void buttonLoad_Click(object sender, EventArgs e)
 		{
@@ -209,22 +235,18 @@ namespace BearTale
 			{
 				int totalRows = dgv.Rows.Count;
 				// get index of the row for the selected cell
-				int rowNumber = 0;
-				int rowIndex = dgv.SelectedCells[rowNumber].OwningRow.Index;
+				int rowIndex = dgv.SelectedCells[0].OwningRow.Index;
 				if (rowIndex == 0)
 					return;
 				// get index of the column for the selected cell
 				int colIndex = dgv.SelectedCells[0].OwningColumn.Index;
 				DataGridViewRow selectedRow = dgv.Rows[rowIndex];
+				dgv.Rows.Remove(selectedRow);
+				dgv.Rows.Insert(rowIndex - 10, selectedRow);
 				dgv.ClearSelection();
-				if (rowIndex - 10 < 0)
-				{
-					dgv.Rows[0].Cells[colIndex].Selected = true;
-				}
-				else dgv.Rows[rowIndex - 10].Cells[colIndex].Selected = true;
+				dgv.Rows[rowIndex - 10].Cells[colIndex].Selected = true;
 			}
-			catch { }
-
+			catch (Exception ex) { Console.WriteLine(ex); }
 		}
 
 		private void buttonPageDown_Click(object sender, EventArgs e)
@@ -235,23 +257,18 @@ namespace BearTale
 				int totalRows = dgv.Rows.Count;
 				// get index of the row for the selected cell
 				int rowIndex = dgv.SelectedCells[0].OwningRow.Index;
-				if (rowIndex == totalRows - 1)
+				if (rowIndex == totalRows - 10)
 					return;
 				// get index of the column for the selected cell
 				int colIndex = dgv.SelectedCells[0].OwningColumn.Index;
 				DataGridViewRow selectedRow = dgv.Rows[rowIndex];
 				dgv.Rows.Remove(selectedRow);
-				dgv.Rows.Insert(rowIndex + 1, selectedRow);
+				dgv.Rows.Insert(rowIndex + 10, selectedRow);
 				dgv.ClearSelection();
-				if (dgv.Rows[dataGridView1.Rows.Count - 1].Cells[colIndex].Value == null)
-				{
-					dgv.Rows[dataGridView1.Rows.Count - 1].Cells[colIndex].Selected = true;
-				}
-				else dgv.Rows[rowIndex + 10].Cells[colIndex].Selected = true;
+				dgv.Rows[rowIndex + 10].Cells[colIndex].Selected = true;
 			}
 			catch { }
 		}
-
 
 		public class 강조클래스
 		{
@@ -383,8 +400,7 @@ namespace BearTale
 			}
 			int rowIndex = dataGridView1.CurrentCell.RowIndex;
 			dataGridView1.Rows[rowIndex].Cells[3].Value = colorComboBox2.Name.ToString();
-
-			//		dataGridView1.Rows[rowIndex].Cells[0].Style.BackColor = Color.FromName(colorComboBox2.Text);
+			//dataGridView1.Rows[rowIndex].Cells[0].Style.BackColor = Color.FromName(colorComboBox2.Text);
 			//textboxColumn.DefaultCellStyle.BackColor = Color.FromName(colorComboBox2.Text);
 		}
 
@@ -408,8 +424,8 @@ namespace BearTale
 			Color clr1 = Color.FromArgb(argb);
 			Color clr2 = Color.FromArgb(argb2);
 
-			colorComboBox1.Items.Add(clr1.Name.ToString());
-			Console.WriteLine(clr2);
+			//colorComboBox1.Items.Add(clr1.Name.ToString());
+			//Console.WriteLine(clr2);
 
 			//dataGridView1.Rows[e.RowIndex].Cells[0].Style.ForeColor = clr1;
 			//dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = clr2;
@@ -420,6 +436,43 @@ namespace BearTale
 			//colorComboBox2.SelectedColor = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
 
 		}
+
+
+		//데이터그리드뷰 데이터테이블로변환
+		public static DataTable GetDataGridViewAsDataTable(DataGridView _DataGridView)
+		{
+			try
+			{
+				if (_DataGridView.ColumnCount == 0)
+					return null;
+				DataTable dtSource = new DataTable();
+				//////create columns
+				foreach (DataGridViewColumn col in _DataGridView.Columns)
+				{
+					if (col.ValueType == null)
+						dtSource.Columns.Add(col.Name, typeof(string));
+					else
+						dtSource.Columns.Add(col.Name, col.ValueType);
+					dtSource.Columns[col.Name].Caption = col.HeaderText;
+				}
+				///////insert row data
+				foreach (DataGridViewRow row in _DataGridView.Rows)
+				{
+					DataRow drNewRow = dtSource.NewRow();
+					foreach (DataColumn col in dtSource.Columns)
+					{
+						drNewRow[col.ColumnName] = row.Cells[col.ColumnName].Value;
+					}
+					dtSource.Rows.Add(drNewRow);
+				}
+				return dtSource;
+			}
+			catch
+			{
+				return null;
+			}
+		}
+
 
 		private void buttonOk_Click(object sender, EventArgs e)
 		{
