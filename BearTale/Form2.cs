@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using Newtonsoft.Json;
 
 namespace BearTale
@@ -24,46 +16,26 @@ namespace BearTale
 			InitializeComponent();
 		}
 
-
-
-
-
-
-
-
-
-
-		private BindingSource oBS = new BindingSource();
-		public static int Compare(String strA, String strB, bool ignoreCase)
-		{
-			if (ignoreCase)
-			{
-				return CultureInfo.CurrentCulture.CompareInfo.Compare(strA, strB, CompareOptions.IgnoreCase);
-			}
-			return CultureInfo.CurrentCulture.CompareInfo.Compare(strA, strB, CompareOptions.None);
-		}
-		//		bool output = Regex.IsMatch("foo", "FOO", RegexOptions.IgnoreCase);
-
 		private void buttonAdd_Click(object sender, EventArgs e)
 		{
 			강조클래스 강조 = new 강조클래스();
 			강조.칼라 = textBoxString.Text;
 			강조.내용 = textBoxString.Text;
-			Color cd = Color.FromArgb(colorCombo1.SelectedColor.A, colorCombo1.SelectedColor.R, colorCombo1.SelectedColor.G, colorCombo1.SelectedColor.B);
-			Color cb = Color.FromArgb(colorCombo2.SelectedColor.A, colorCombo2.SelectedColor.R, colorCombo2.SelectedColor.G, colorCombo2.SelectedColor.B);
-
+			Color cd = Color.FromArgb(Color.FromName(colorComboBox1.Text).A, Color.FromName(colorComboBox1.Text).R, Color.FromName(colorComboBox1.Text).G, Color.FromName(colorComboBox1.Text).B);
+			Color cb = Color.FromArgb(Color.FromName(colorComboBox2.Text).A, Color.FromName(colorComboBox2.Text).R, Color.FromName(colorComboBox2.Text).G, Color.FromName(colorComboBox2.Text).B);
 			강조.글자색 = cd.Name.ToString();
 			강조.배경색 = cb.Name.ToString();
-			//강조.글자색 = colorCombo1.SelectedColor.Name.ToString();
-			//강조.배경색 = colorCombo2.SelectedColor.Name.ToString();
+			//강조.글자색 = colorComboBox1.SelectedColor.Name.ToString();
+			//강조.배경색 = colorComboBox2.SelectedColor.Name.ToString();
 			강조.무시 = checkBoxIgnore.Checked;
 			강조.전환 = checkBoxInvert.Checked;
 			강조.진하게 = checkBoxBold.Checked;
 			강조.기울이게 = checkBoxItalic.Checked;
-
 			bindingSource.Add(강조);
 			jsonSave();
 		}
+
+
 		private void buttonDelete_Click(object sender, EventArgs e)
 		{
 			if (강조내용.Count > 0)
@@ -71,6 +43,8 @@ namespace BearTale
 				bindingSource.RemoveAt(dataGridView1.CurrentRow.Index);
 			}
 		}
+
+
 
 		private void buttonMoveUp_Click(object sender, EventArgs e)
 		{
@@ -90,8 +64,7 @@ namespace BearTale
 				dgv.ClearSelection();
 				dgv.Rows[rowIndex - 1].Cells[colIndex].Selected = true;
 			}
-			catch { }
-
+			catch(Exception ex) { Console.WriteLine(ex); }
 		}
 
 		private int GetSelectedRowIndex(DataGridView dgv)
@@ -174,8 +147,8 @@ namespace BearTale
 
 		private void buttonLoad_Click(object sender, EventArgs e)
 		{
-			Color cd = Color.FromArgb(colorCombo1.SelectedColor.A, colorCombo1.SelectedColor.R, colorCombo1.SelectedColor.G, colorCombo1.SelectedColor.B);
-			Color cb = Color.FromArgb(colorCombo2.SelectedColor.A, colorCombo2.SelectedColor.R, colorCombo2.SelectedColor.G, colorCombo2.SelectedColor.B);
+			Color cd = Color.FromArgb(Color.FromName(colorComboBox1.Text).A, Color.FromName(colorComboBox1.Text).R, Color.FromName(colorComboBox1.Text).G, Color.FromName(colorComboBox1.Text).B);
+			Color cb = Color.FromArgb(Color.FromName(colorComboBox2.Text).A, Color.FromName(colorComboBox2.Text).R, Color.FromName(colorComboBox2.Text).G, Color.FromName(colorComboBox2.Text).B);
 
 			System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			//강조클래스 data = new 강조클래스
@@ -292,23 +265,55 @@ namespace BearTale
 			dataGridView1.DataSource = bindingSource;
 
 			dataGridView1.AllowUserToAddRows = false;
-			dataGridView1.Columns[0].Width = 50;
+			dataGridView1.Columns[0].Width = 100;
 			dataGridView1.Columns[1].Width = 100;
 			dataGridView1.GridColor = Color.White;
 			dataGridView1.Columns[0].Resizable = DataGridViewTriState.False;
 			dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
 			dataGridView1.ReadOnly = true;
 			dataGridView1.ColumnHeadersVisible = true;
-			colorCombo1.SelectedColor = Color.White;
-			//buttonLoad_Click(sender, e);
+
+			colorComboBox1.Items.Add("Custom");
+			colorComboBox1.Items.Add("White");
+			colorComboBox1.Items.Add("Red");
+			colorComboBox1.Items.Add("Green");
+			colorComboBox1.Items.Add("Blue");
+			colorComboBox1.Items.Add("Yellow");
+			colorComboBox1.Items.Add("Cyan");
+			colorComboBox1.Items.Add("Magenta");
+			colorComboBox1.Items.Add("DarkRed");
+			colorComboBox1.Items.Add("DarkGreen");
+			colorComboBox1.Items.Add("DarkBlue");
+			colorComboBox1.Items.Add("DarkCyan");
+			colorComboBox1.Items.Add("DarkMagenta");
+
+			colorComboBox2.Items.Add("Custom");
+			colorComboBox2.Items.Add("White");
+			colorComboBox2.Items.Add("Red");
+			colorComboBox2.Items.Add("Green");
+			colorComboBox2.Items.Add("Blue");
+			colorComboBox2.Items.Add("Yellow");
+			colorComboBox2.Items.Add("Cyan");
+			colorComboBox2.Items.Add("Magenta");
+			colorComboBox2.Items.Add("DarkRed");
+			colorComboBox2.Items.Add("DarkGreen");
+			colorComboBox2.Items.Add("DarkBlue");
+			colorComboBox2.Items.Add("DarkCyan");
+			colorComboBox2.Items.Add("DarkMagenta");
+
+			colorComboBox1.SelectedIndex = 3;
+			colorComboBox2.SelectedIndex = 5;
+
+			//데이터그리드뷰 RowHeader 숨기기
+			dataGridView1.RowHeadersVisible = false;
 		}
 
 		private void jsonSave()
 		{
 			try
 			{
-				Color cd = Color.FromArgb(colorCombo1.SelectedColor.A, colorCombo1.SelectedColor.R, colorCombo1.SelectedColor.G, colorCombo1.SelectedColor.B);
-				Color cb = Color.FromArgb(colorCombo2.SelectedColor.A, colorCombo2.SelectedColor.R, colorCombo2.SelectedColor.G, colorCombo2.SelectedColor.B);
+				Color cd = Color.FromArgb(Color.FromName(colorComboBox1.Text).A, Color.FromName(colorComboBox1.Text).R, Color.FromName(colorComboBox1.Text).G, Color.FromName(colorComboBox1.Text).B);
+				Color cb = Color.FromArgb(Color.FromName(colorComboBox2.Text).A, Color.FromName(colorComboBox2.Text).R, Color.FromName(colorComboBox2.Text).G, Color.FromName(colorComboBox2.Text).B);
 
 				System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 				string currentPath = System.IO.Directory.GetCurrentDirectory();
@@ -356,7 +361,7 @@ namespace BearTale
 				return;
 			}
 			int rowIndex = dataGridView1.CurrentCell.RowIndex;
-			dataGridView1.Rows[rowIndex].Cells[2].Value = colorCombo1.Name.ToString();
+			dataGridView1.Rows[rowIndex].Cells[2].Value = colorComboBox1.Name.ToString();
 			//			dataGridView1.Rows[rowIndex].Cells[0].Style.ForeColor = Color.FromName(colorComboBox1.Text);
 			//textboxColumn.DefaultCellStyle.ForeColor = Color.FromName(colorComboBox1.Text);
 		}
@@ -368,22 +373,10 @@ namespace BearTale
 				return;
 			}
 			int rowIndex = dataGridView1.CurrentCell.RowIndex;
-			dataGridView1.Rows[rowIndex].Cells[3].Value = colorCombo2.Name.ToString();
+			dataGridView1.Rows[rowIndex].Cells[3].Value = colorComboBox2.Name.ToString();
 
 			//		dataGridView1.Rows[rowIndex].Cells[0].Style.BackColor = Color.FromName(colorComboBox2.Text);
 			//textboxColumn.DefaultCellStyle.BackColor = Color.FromName(colorComboBox2.Text);
-		}
-
-
-		private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-		{// row header 에 자동 일련번호 넣기
-			StringFormat drawFormat = new StringFormat();
-			//drawFormat.FormatFlags = StringFormatFlags.DirectionVertical;
-			drawFormat.FormatFlags = StringFormatFlags.DirectionRightToLeft;
-			using (Brush brush = new SolidBrush(Color.Black))
-			{
-				e.Graphics.DrawString((e.RowIndex + 1).ToString(), e.InheritedRowStyle.Font, brush, e.RowBounds.Location.X + 30, e.RowBounds.Location.Y + 4, drawFormat);
-			}
 		}
 
 		private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -394,8 +387,9 @@ namespace BearTale
 			}
 			//string dgv1 = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
 			//string dgv2 = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
-			//Color cd = Color.FromArgb(colorCombo1.SelectedColor.A, colorCombo1.SelectedColor.R, colorCombo1.SelectedColor.G, colorCombo1.SelectedColor.B);
-			//Color cb = Color.FromArgb(colorCombo2.SelectedColor.A, colorCombo2.SelectedColor.R, colorCombo2.SelectedColor.G, colorCombo2.SelectedColor.B);
+			//Color cd = Color.FromArgb(colorComboBox1.SelectedColor.A, colorComboBox1.SelectedColor.R, colorComboBox1.SelectedColor.G, colorComboBox1.SelectedColor.B);
+			//Color cb = Color.FromArgb(colorComboBox2.SelectedColor.A, colorComboBox2.SelectedColor.R, colorComboBox2.SelectedColor.G, colorComboBox2.SelectedColor.B);
+			textBoxString.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
 
 			string colorcode = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
 			string colorcode2 = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
@@ -405,14 +399,16 @@ namespace BearTale
 			Color clr1 = Color.FromArgb(argb);
 			Color clr2 = Color.FromArgb(argb2);
 
-			//dataGridView1.Rows[e.RowIndex].Cells[0].Style.ForeColor = clr;
+			colorComboBox1.Items.Add(clr1.Name.ToString());
+			Console.WriteLine(clr2);
+
+			//dataGridView1.Rows[e.RowIndex].Cells[0].Style.ForeColor = clr1;
 			//dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = clr2;
+		//	ColorTranslator.ToHtml(Color.FromArgb(Color.Tomato.ToArgb()))
 
-
-			textBoxString.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
-			//colorCombo1.SelectedColor.Name.ToString() = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
-			//colorCombo1.SelectedColor = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
-			//colorCombo2.SelectedColor = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
+			//colorComboBox1.SelectedColor.Name.ToString() = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
+			//colorComboBox1.SelectedColor = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
+			//colorComboBox2.SelectedColor = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
 
 		}
 
@@ -648,7 +644,7 @@ namespace BearTale
 
 
 
-		private void colorCombo1_ColorChanged(object sender, ColorChangeArgs e)
+		private void colorComboBox1_ColorChanged(object sender, ColorChangeArgs e)
 		{
 			Console.WriteLine(e.color.Name.ToString(), "Selected color", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -659,18 +655,18 @@ namespace BearTale
 			int rowIndex = dataGridView1.CurrentCell.RowIndex;
 			//			dataGridView1.Rows[rowIndex].Cells[2].Value = e.color.Name.ToString();
 
-			Color cd = Color.FromArgb(colorCombo1.SelectedColor.A, colorCombo1.SelectedColor.R, colorCombo1.SelectedColor.G, colorCombo1.SelectedColor.B);
-			Color cb = Color.FromArgb(colorCombo2.SelectedColor.A, colorCombo2.SelectedColor.R, colorCombo2.SelectedColor.G, colorCombo2.SelectedColor.B);
+			Color cd = Color.FromArgb(Color.FromName(colorComboBox1.Text).A, Color.FromName(colorComboBox1.Text).R, Color.FromName(colorComboBox1.Text).G, Color.FromName(colorComboBox1.Text).B);
+			Color cb = Color.FromArgb(Color.FromName(colorComboBox2.Text).A, Color.FromName(colorComboBox2.Text).R, Color.FromName(colorComboBox2.Text).G, Color.FromName(colorComboBox2.Text).B);
 
 			dataGridView1.Rows[rowIndex].Cells[2].Value = cd.Name.ToString();
 			dataGridView1.Rows[rowIndex].Cells[3].Value = cb.Name.ToString();
-			//강조.글자색 = colorCombo1.SelectedColor.Name.ToString();
-			//강조.배경색 = colorCombo2.SelectedColor.Name.ToString();
+			//강조.글자색 = colorComboBox1.SelectedColor.Name.ToString();
+			//강조.배경색 = colorComboBox2.SelectedColor.Name.ToString();
 
 
 		}
 
-		private void colorCombo1_Load(object sender, EventArgs e)
+		private void colorComboBox1_Load(object sender, EventArgs e)
 		{
 
 		}

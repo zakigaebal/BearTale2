@@ -50,8 +50,8 @@
 			this.checkBoxItalic = new System.Windows.Forms.CheckBox();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.colorDialog2 = new System.Windows.Forms.ColorDialog();
-			this.colorCombo1 = new BearTale.ColorCombo();
-			this.colorCombo2 = new BearTale.ColorCombo();
+			this.colorComboBox1 = new BearTale.ColorComboBox();
+			this.colorComboBox2 = new BearTale.ColorComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -202,7 +202,6 @@
 			this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
 			this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
 			this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
-			this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
 			// 
 			// checkBoxIgnore
 			// 
@@ -248,36 +247,35 @@
 			this.checkBoxItalic.UseVisualStyleBackColor = true;
 			this.checkBoxItalic.CheckedChanged += new System.EventHandler(this.checkBoxItalic_CheckedChanged);
 			// 
-			// colorCombo1
+			// colorComboBox1
 			// 
-			this.colorCombo1.Extended = false;
-			this.colorCombo1.Location = new System.Drawing.Point(13, 203);
-			this.colorCombo1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.colorCombo1.Name = "colorCombo1";
-			this.colorCombo1.SelectedColor = System.Drawing.Color.Black;
-			this.colorCombo1.Size = new System.Drawing.Size(152, 19);
-			this.colorCombo1.TabIndex = 18;
-			this.colorCombo1.ColorChanged += new BearTale.ColorChangedHandler(this.colorCombo1_ColorChanged);
-			this.colorCombo1.Load += new System.EventHandler(this.colorCombo1_Load);
+			this.colorComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.colorComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.colorComboBox1.FormattingEnabled = true;
+			this.colorComboBox1.Location = new System.Drawing.Point(12, 200);
+			this.colorComboBox1.MyColors = new string[0];
+			this.colorComboBox1.Name = "colorComboBox1";
+			this.colorComboBox1.Size = new System.Drawing.Size(121, 22);
+			this.colorComboBox1.TabIndex = 17;
 			// 
-			// colorCombo2
+			// colorComboBox2
 			// 
-			this.colorCombo2.Extended = false;
-			this.colorCombo2.Location = new System.Drawing.Point(235, 203);
-			this.colorCombo2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-			this.colorCombo2.Name = "colorCombo2";
-			this.colorCombo2.SelectedColor = System.Drawing.Color.Black;
-			this.colorCombo2.Size = new System.Drawing.Size(141, 19);
-			this.colorCombo2.TabIndex = 18;
-			this.colorCombo2.ColorChanged += new BearTale.ColorChangedHandler(this.colorCombo1_ColorChanged);
+			this.colorComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.colorComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.colorComboBox2.FormattingEnabled = true;
+			this.colorComboBox2.Location = new System.Drawing.Point(235, 202);
+			this.colorComboBox2.MyColors = new string[0];
+			this.colorComboBox2.Name = "colorComboBox2";
+			this.colorComboBox2.Size = new System.Drawing.Size(121, 22);
+			this.colorComboBox2.TabIndex = 18;
 			// 
 			// Form2
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(470, 287);
-			this.Controls.Add(this.colorCombo2);
-			this.Controls.Add(this.colorCombo1);
+			this.Controls.Add(this.colorComboBox2);
+			this.Controls.Add(this.colorComboBox1);
 			this.Controls.Add(this.checkBoxItalic);
 			this.Controls.Add(this.checkBoxBold);
 			this.Controls.Add(this.checkBoxInvert);
@@ -330,7 +328,7 @@
 		private System.Windows.Forms.CheckBox checkBoxItalic;
 		private System.Windows.Forms.ColorDialog colorDialog1;
 		private System.Windows.Forms.ColorDialog colorDialog2;
-		private ColorCombo colorCombo1;
-		private ColorCombo colorCombo2;
+		private ColorComboBox colorComboBox1;
+		private ColorComboBox colorComboBox2;
 	}
 }

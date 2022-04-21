@@ -159,7 +159,6 @@
 			this.aboutBearTaliToolStripMenuItem.Name = "aboutBearTaliToolStripMenuItem";
 			this.aboutBearTaliToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.aboutBearTaliToolStripMenuItem.Text = "About bearTail";
-			this.aboutBearTaliToolStripMenuItem.Click += new System.EventHandler(this.aboutBearTaliToolStripMenuItem_Click);
 			// 
 			// toolStrip1
 			// 
@@ -218,14 +217,12 @@
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(800, 401);
 			this.tabControl1.TabIndex = 0;
-			this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
 			this.tabControl1.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl1_DragDrop);
 			// 
 			// contextMenuStrip1
 			// 
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-			this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
 			// 
 			// checkBoxTail
 			// 
