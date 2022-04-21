@@ -55,6 +55,7 @@
 			this.checkBoxTail = new System.Windows.Forms.CheckBox();
 			this.comboBoxUtf = new System.Windows.Forms.ComboBox();
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
@@ -80,7 +81,8 @@
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.clearToolStripMenuItemClear,
-            this.clearAllToolStripMenuItem});
+            this.clearAllToolStripMenuItem,
+            this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "File";
@@ -88,21 +90,21 @@
 			// openToolStripMenuItem
 			// 
 			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-			this.openToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.openToolStripMenuItem.Text = "Open";
 			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
 			// 
 			// clearToolStripMenuItemClear
 			// 
 			this.clearToolStripMenuItemClear.Name = "clearToolStripMenuItemClear";
-			this.clearToolStripMenuItemClear.Size = new System.Drawing.Size(115, 22);
+			this.clearToolStripMenuItemClear.Size = new System.Drawing.Size(180, 22);
 			this.clearToolStripMenuItemClear.Text = "Clear";
 			this.clearToolStripMenuItemClear.Click += new System.EventHandler(this.clearToolStripMenuItemClear_Click);
 			// 
 			// clearAllToolStripMenuItem
 			// 
 			this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-			this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+			this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.clearAllToolStripMenuItem.Text = "ClearAll";
 			// 
 			// editToolStripMenuItem
@@ -249,6 +251,13 @@
 			this.fileSystemWatcher1.SynchronizingObject = this;
 			this.fileSystemWatcher1.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			// 
+			// exitToolStripMenuItem
+			// 
+			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.exitToolStripMenuItem.Text = "Exit";
+			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -303,6 +312,7 @@
 		private System.Windows.Forms.ToolStripMenuItem highlightingToolStripMenuItem;
 		private System.Windows.Forms.ComboBox comboBoxUtf;
 		private System.IO.FileSystemWatcher fileSystemWatcher1;
+		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 	}
 }
 

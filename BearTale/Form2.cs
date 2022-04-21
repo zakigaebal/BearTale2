@@ -31,6 +31,15 @@ namespace BearTale
 			강조.전환 = checkBoxInvert.Checked;
 			강조.진하게 = checkBoxBold.Checked;
 			강조.기울이게 = checkBoxItalic.Checked;
+
+			//custom 칼라이면
+			if (colorComboBox1.SelectedItem.ToString() == "Custom")
+			{
+				강조.글자색 = customColor.Name.ToString();
+				강조.배경색 = customColor2.Name.ToString();
+			}
+
+
 			bindingSource.Add(강조);
 			jsonSave();
 		}
@@ -64,7 +73,7 @@ namespace BearTale
 				dgv.ClearSelection();
 				dgv.Rows[rowIndex - 1].Cells[colIndex].Selected = true;
 			}
-			catch(Exception ex) { Console.WriteLine(ex); }
+			catch (Exception ex) { Console.WriteLine(ex); }
 		}
 
 		private int GetSelectedRowIndex(DataGridView dgv)
@@ -180,7 +189,7 @@ namespace BearTale
 					기울이게 = checkBoxItalic.Checked
 				};
 			}
-			
+
 
 
 			//string jsonText = File.ReadAllText(jsonName);
@@ -317,7 +326,7 @@ namespace BearTale
 
 				System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 				string currentPath = System.IO.Directory.GetCurrentDirectory();
-				
+
 
 				//직렬화
 
@@ -404,7 +413,7 @@ namespace BearTale
 
 			//dataGridView1.Rows[e.RowIndex].Cells[0].Style.ForeColor = clr1;
 			//dataGridView1.Rows[e.RowIndex].Cells[0].Style.BackColor = clr2;
-		//	ColorTranslator.ToHtml(Color.FromArgb(Color.Tomato.ToArgb()))
+			//	ColorTranslator.ToHtml(Color.FromArgb(Color.Tomato.ToArgb()))
 
 			//colorComboBox1.SelectedColor.Name.ToString() = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
 			//colorComboBox1.SelectedColor = Color.FromName(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
@@ -668,7 +677,51 @@ namespace BearTale
 
 		private void colorComboBox1_Load(object sender, EventArgs e)
 		{
+		}
 
+		Color customColor = new Color();
+		Color customColor2 = new Color();
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			ColorDialog dialog = new ColorDialog();
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				int argb = dialog.Color.ToArgb();
+				customColor = Color.FromArgb(argb);
+				//color name이 나옴
+				//color 16진수로 변환해서 데이터그리드뷰에 넣어야됨.
+			}
+			if (!colorComboBox1.Items.Contains("Custom"))
+			{
+				colorComboBox1.Items.Add("Custom");
+			}
+			else
+			{
+				colorComboBox1.SelectedItem = "Custom";
+				Console.WriteLine(customColor);
+			}
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			ColorDialog dialog = new ColorDialog();
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				int argb = dialog.Color.ToArgb();
+				customColor2 = Color.FromArgb(argb);
+				//color name이 나옴
+				//color 16진수로 변환해서 데이터그리드뷰에 넣어야됨.
+			}
+			if (!colorComboBox2.Items.Contains("Custom"))
+			{
+				colorComboBox2.Items.Add("Custom");
+			}
+			else
+			{
+				colorComboBox2.SelectedItem = "Custom";
+				Console.WriteLine(customColor2);
+			}
 		}
 	}
 }

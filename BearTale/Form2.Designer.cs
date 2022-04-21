@@ -50,8 +50,10 @@
 			this.checkBoxItalic = new System.Windows.Forms.CheckBox();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.colorDialog2 = new System.Windows.Forms.ColorDialog();
-			this.colorComboBox1 = new BearTale.ColorComboBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
 			this.colorComboBox2 = new BearTale.ColorComboBox();
+			this.colorComboBox1 = new BearTale.ColorComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -247,16 +249,25 @@
 			this.checkBoxItalic.UseVisualStyleBackColor = true;
 			this.checkBoxItalic.CheckedChanged += new System.EventHandler(this.checkBoxItalic_CheckedChanged);
 			// 
-			// colorComboBox1
+			// button1
 			// 
-			this.colorComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-			this.colorComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.colorComboBox1.FormattingEnabled = true;
-			this.colorComboBox1.Location = new System.Drawing.Point(12, 200);
-			this.colorComboBox1.MyColors = new string[0];
-			this.colorComboBox1.Name = "colorComboBox1";
-			this.colorComboBox1.Size = new System.Drawing.Size(121, 22);
-			this.colorComboBox1.TabIndex = 17;
+			this.button1.Location = new System.Drawing.Point(139, 199);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(40, 23);
+			this.button1.TabIndex = 19;
+			this.button1.Text = "C";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(362, 202);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(38, 23);
+			this.button2.TabIndex = 19;
+			this.button2.Text = "C";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
 			// colorComboBox2
 			// 
@@ -269,11 +280,24 @@
 			this.colorComboBox2.Size = new System.Drawing.Size(121, 22);
 			this.colorComboBox2.TabIndex = 18;
 			// 
+			// colorComboBox1
+			// 
+			this.colorComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.colorComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.colorComboBox1.FormattingEnabled = true;
+			this.colorComboBox1.Location = new System.Drawing.Point(12, 200);
+			this.colorComboBox1.MyColors = new string[0];
+			this.colorComboBox1.Name = "colorComboBox1";
+			this.colorComboBox1.Size = new System.Drawing.Size(121, 22);
+			this.colorComboBox1.TabIndex = 17;
+			// 
 			// Form2
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(470, 287);
+			this.Controls.Add(this.button2);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.colorComboBox2);
 			this.Controls.Add(this.colorComboBox1);
 			this.Controls.Add(this.checkBoxItalic);
@@ -330,5 +354,7 @@
 		private System.Windows.Forms.ColorDialog colorDialog2;
 		private ColorComboBox colorComboBox1;
 		private ColorComboBox colorComboBox2;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button button2;
 	}
 }
