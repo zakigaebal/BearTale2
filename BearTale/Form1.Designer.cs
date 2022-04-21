@@ -54,7 +54,6 @@
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.checkBoxTail = new System.Windows.Forms.CheckBox();
 			this.comboBoxUtf = new System.Windows.Forms.ComboBox();
-			this.button1 = new System.Windows.Forms.Button();
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
 			this.menuStrip1.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -117,7 +116,6 @@
 			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
 			this.viewToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
 			this.viewToolStripMenuItem.Text = "View";
-			this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
 			// 
 			// preferencesToolStripMenuItem
 			// 
@@ -202,7 +200,6 @@
 			this.toolStripTextBoxPath.Name = "toolStripTextBoxPath";
 			this.toolStripTextBoxPath.ReadOnly = true;
 			this.toolStripTextBoxPath.Size = new System.Drawing.Size(300, 25);
-			this.toolStripTextBoxPath.Click += new System.EventHandler(this.toolStripTextBoxPath_Click);
 			// 
 			// panel1
 			// 
@@ -233,7 +230,7 @@
 			// checkBoxTail
 			// 
 			this.checkBoxTail.AutoSize = true;
-			this.checkBoxTail.Location = new System.Drawing.Point(164, 30);
+			this.checkBoxTail.Location = new System.Drawing.Point(280, 31);
 			this.checkBoxTail.Name = "checkBoxTail";
 			this.checkBoxTail.Size = new System.Drawing.Size(88, 16);
 			this.checkBoxTail.TabIndex = 6;
@@ -244,20 +241,10 @@
 			// comboBoxUtf
 			// 
 			this.comboBoxUtf.FormattingEnabled = true;
-			this.comboBoxUtf.Location = new System.Drawing.Point(259, 28);
+			this.comboBoxUtf.Location = new System.Drawing.Point(374, 27);
 			this.comboBoxUtf.Name = "comboBoxUtf";
 			this.comboBoxUtf.Size = new System.Drawing.Size(121, 20);
 			this.comboBoxUtf.TabIndex = 7;
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(395, 30);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 8;
-			this.button1.Text = "button1";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click_1);
 			// 
 			// fileSystemWatcher1
 			// 
@@ -270,7 +257,6 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.button1);
 			this.Controls.Add(this.comboBoxUtf);
 			this.Controls.Add(this.checkBoxTail);
 			this.Controls.Add(this.panel1);
@@ -319,7 +305,6 @@
 		private System.Windows.Forms.ToolStripMenuItem saveFromFileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem highlightingToolStripMenuItem;
 		private System.Windows.Forms.ComboBox comboBoxUtf;
-		private System.Windows.Forms.Button button1;
 		private System.IO.FileSystemWatcher fileSystemWatcher1;
 	}
 }
